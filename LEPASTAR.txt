@@ -1,0 +1,13 @@
+2
+10 28
+5
+BAVER BAVER1A
+asg a2a
+.. 
+..
+EPAMA EPAMA1A
+BAVER BAVER2B
+..
+..
+..
+EPAMA EPAMA2L
