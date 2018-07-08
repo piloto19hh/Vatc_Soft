@@ -73,7 +73,7 @@ void vuelo::setpoint(const string &point) {
 void vuelo::update(string field, string info) {
     if (field == "origin") ori = info;
     else if (field == "destination") dest = info;
-    else if (field == "point") setpoint(info);
+    else if (field == "point") pnt = info;
     else if (field == "altitude") inalt = info;
     else if (field == "rwy") rwy = info;
     else if (field == "qnh") qnh = info;
@@ -83,20 +83,20 @@ void vuelo::update(string field, string info) {
         else inout = 0;
     }
     else if (field == "status"){
-        if (field == "blocks") status = 0;
-        else if (field == "taxi") status = 1;
-        else if (field == "take off") status = 2;
-        else if (field == "climbing") status = 3;
-        else if (field == "cruise") status = 4;
-        else if (field == "descend") status = 5;
-        else if (field == "app") status = 6;
-        else if (field == "landing") status = 7;
+        if (info == "blocks") status = 0;
+        else if (info == "taxi") status = 1;
+        else if (info == "take off") status = 2;
+        else if (info == "climbing") status = 3;
+        else if (info == "cruise") status = 4;
+        else if (info == "descend") status = 5;
+        else if (info == "app") status = 6;
+        else if (info == "landing") status = 7;
     }
     else cout << "'" << field << "' no es un parametro válido" << endl;
 }
 
 void vuelo::write() const {
-    cout << "CALLSIGN: "<< callsign << endl << "ESTADO: ";
+    cout << endl << "CALLSIGN: "<< callsign << endl << "ESTADO:   ";
     if (status == 0) cout << "On Blocks" << endl;
     else if (status == 1) cout << "Taxiing" << endl;
     else if (status == 2) cout << "Taking Off" << endl;
@@ -105,8 +105,10 @@ void vuelo::write() const {
     else if (status == 5) cout << "Descending"<< endl;
     else if (status == 6) cout << "Approach" << endl;
     else if (status == 7) cout << "Landing" << endl;
-    cout << "ORIGEN: " << ori << endl << "DESTINO: " << dest << endl;
-    if (inout == 1) cout << "LLEGADA: ";
-    else cout << " SALIDA: ";
-    cout << via << endl << " SQUAWK: " << sqwk << endl;
+    else cout << "NULL" << endl;
+    cout << "ORIGEN:   " << ori << endl << "DESTINO:  " << dest << endl;
+    if (inout == 1) cout << "LLEGADA:  ";
+    else cout << "SALIDA:   ";
+    cout << via << endl << "SQUAWK:   " << sqwk << endl;
+}
 }
