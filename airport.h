@@ -69,6 +69,12 @@ public:
     bool update_fl(string& calls, string field, string& info);
 
     void write_flight(string& calls) ;
+    
+     /**@brief Auxiliar function to write a flight's readback
+     *
+     * @param callsign Callsign of the desired flight's readback
+     */
+    void fl_readback(string calls) const;
 
     /**@brief Deletes a flight
      *
