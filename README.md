@@ -8,8 +8,13 @@ Made by piloto19hh
 
 
 Current features (doesn't necessarily mean they are all working):
+
 -Add/delete flights
+
 -Update flight information
+
 -View flight information
+
 -Check SIDs and STARs of any specific point
+
 -Automatically set the corresponding SID/STAR to a flight, once the point is known.
