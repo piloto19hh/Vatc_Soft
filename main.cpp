@@ -35,12 +35,7 @@ int main() {
         }
         else if (ins == "upd"){
             string param, value;
-            cout << "enter callsign: ";
-            cin >> callsgn;
-            cout << endl << "parametro: ";
-            cin >>param;
-            cout << endl << "nuevo valor: ";
-            cin >> value;
+            cin >> callsgn >> param >> value;
             apt.update_fl(callsgn,param,value);
         }
         else if (ins == "readback"){
