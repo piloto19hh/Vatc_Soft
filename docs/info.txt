@@ -1,0 +1,6 @@
+In "docs" folder, there must be all the airports' information documents. For each different airport there must be:
+1- SIDs document. It'll be named 'ICAOSID.txt', replacing ICAO with the airport's ICAO code.
+2- SARs document. It'll be named 'ICAOSTAR.txt', replacin ICAO with the airport's ICAO cose.
+
+Those documents will have all the necessary information about each airport. This is: number of runways, the runways' names and the
+number of possible arrival/departure routes , followed by it's point name and arr/dep name.
