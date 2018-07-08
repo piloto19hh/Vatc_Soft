@@ -136,6 +136,16 @@ void Airport::write_flight(string &calls)  {
     mfl[calls].write();
 }
 
+void Airport::fl_readback(string calls) const {
+    map<string,vuelo>::const_iterator it;
+    it = mfl.find(calls);
+    if (it == mfl.end()){
+        cout << "El vuelo " << calls << " no existe." << endl;
+        return;
+    }
+    mfl[calls].readback(calls);
+}
+
 bool Airport::del_fl(string cals) {
     map<string,vuelo>::iterator it;
     it = mfl.find(cals);
