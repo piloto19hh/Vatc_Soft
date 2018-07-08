@@ -106,6 +106,7 @@ bool Airport::new_flight(const string &calls, string& stat) {
     if (it != mfl.end()) return false;
     vuelo f1(calls);
     if (stat == "arrival"){
+        f1.update("status","app");
         f1.update("mode","arrival");
         f1.update("destination",ICAO);
         f1.update("rwy",ldrwy);
