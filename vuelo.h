@@ -41,6 +41,8 @@ public:
     void update(string field, string info);
 
     void write() const;
+    
+    void readback() const;
 };
 
 
