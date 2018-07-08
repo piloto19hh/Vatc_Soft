@@ -111,4 +111,8 @@ void vuelo::write() const {
     else cout << "SALIDA:   ";
     cout << via << endl << "SQUAWK:   " << sqwk << endl;
 }
+
+void vuelo::readback() const {
+cout << callsign << "cleared to " << dest << " via " << via << ". Active runway is " << rwy << ", initial level " << inalt;
+cout << ". Sqwawk " << sqwk << " Actual QNH is " << qnh << endl;
 }
