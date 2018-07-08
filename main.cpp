@@ -39,7 +39,8 @@ int main() {
             apt.update_fl(callsgn,param,value);
         }
         else if (ins == "readback"){
-            //Show copy details
+            cin >> callsgn;
+            apt.fl_readback(callsgn);
         }
         else if (ins == "sid"){
             string point;
