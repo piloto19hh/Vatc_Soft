@@ -11,13 +11,11 @@ Airport::Airport(string& apt) {
     ifstream datastar;
     ICAO = apt;
     if (ICAO == "LEPA"){ //fill map with points and their departure
-        //datasid.open("C:\\Users\\raul_\\Desktop\\Vatc soft\\docs\\docs\\LEPA_SID.txt");
-        //datastar.open("C:\\Users\\raul_\\Desktop\\Vatc soft\\docs\\docs\\LEPA_STAR.txt");
-        datasid.open("LEPASID.txt");
-        datastar.open("LEPASTAR.txt");
+        datasid.open("./docs/LEPASID.txt");
+        datastar.open("./docs/LEPASTAR.txt");
     }
     else if (ICAO == "LEAL"){ //fill map with points and their departure
-        datasid.open("LEALSID.txt");
+        datasid.open("./docs/LEALSID.txt");
         datastar.open("LEALSTAR.txt");
     }
     else {
@@ -28,9 +26,10 @@ Airport::Airport(string& apt) {
     if (datasid.fail() or datastar.fail()) cout << "Se ha producido un error al leer los datos del aeropuerto" << endl;
     else if (datasid.is_open() and datastar.is_open()) {
         unsigned int n;
-        datasid >> n;
+        datasid >> n; //Number of Rumways
+        nrwy = n;
         string pista;
-        pistas = vector<string>(n);
+        pistas = vector<string>(2*n); //Will contain the runways and its order
         for (int i = 0; i < n; ++i){
             datasid >> pista;
             pistas[i] = pista;
@@ -38,62 +37,91 @@ Airport::Airport(string& apt) {
         SIDs = vector<map<string,string>>(n);
         STARs = vector<map<string,string>>(n);
         int nrwy;
-        datasid >> nrwy;
-        for (int pst = 0; pst < n; ++pst) {
+        datasid >> nrwy; //Number of possible departures on each runway
+        for (int pst = 0; pst < n; ++pst) { //Filling vectors with departures
             for (int i = 0; i < nrwy; ++i) {
                 string pont, route;
                 datasid >> pont >> route;
-                //SIDs.insert(pont);
                 SIDs[pst][pont] = route;
             }
         }
-        for (int pst = 0; pst < n; ++pst) {
+        for (int i = n; i < 2*n; ++i){
+            datastar >> pista;
+            pistas[i] = pista;
+        }
+        datastar >> nrwy;
+        for (int pst = 0; pst < n; ++pst) { //Filling vectors with arrivals
             for (int i = 0; i < nrwy; ++i) {
                 string pont, route;
                 datastar >> pont >> route;
-                //SIDs.insert(pont);
                 STARs[pst][pont] = route;
             }
         }
-        /*
-        while (not datasid.eof()) {
-            string pont, route;
-            datasid >> pont >> route;
-            //SIDs.insert(pont);
-            SIDs[pont] = route;
-        }
-        while (not datastar.eof()) {
-            string pont, route;
-            datastar >> pont >> route;
-            //SIDs.insert(pont);
-            STARs[pont] = route;
-        }
-         */
         correct = true;
     }
     datasid.close();
     datastar.close();
 }
 
-void Airport::setconfig(string& to, string& ld) {
-    torwy = to;
-    ldrwy = ld;
+/*
+bool Airport::point_wr(string mode, int& nrwy){
+    if (mode == "dep"){
+        cout << "Pista " << torwy << ":" << endl;
+        for (auto it = SIDs[toID].begin(); it != SIDs[toID].end(); ++it) {
+            string pont, route;
+            cout << it->first << " -- " << it ->second << endl;
+        }
+    }
+    else {
+        cout << "Pista " << ldrwy << ":" << endl;
+        for (auto it = STARs[ldID].begin(); it != STARs[ldID].end(); ++it) {
+            string pont, route;
+            cout << it->first << " -- " << it ->second << endl;
+        }
+    }
+    return true;
+}
+ */
+
+void Airport::setconfig(string to, string ld) {
+    if (to == "NULL"){
+        ldrwy = ld;
+    }
+    else if (ld == "NULL"){
+        torwy = to;
+    }
+    else {
+        torwy = to;
+        ldrwy = ld;
+    }
     for (int i = 0; i < pistas.size(); ++i){
         if (pistas[i] == torwy) toID = i;
         if (pistas[i] == ldrwy) ldID = i;
     }
+    ldID -= nrwy;
+    /*
+    int nrwy = 13;
+    int nrwy1 = 12;
+    bool donedep = point_wr("dep",nrwy);
+    cout << endl;
+    bool donearr = point_wr("arr",nrwy1);
+     */
 }
 
 string Airport::getsid(string point) {
     map<string,string>::iterator it;
     it = SIDs[toID].find(point);
-    return (*it).second;
+    if (it != SIDs[toID].end()) return (*it).second;
+    return "Punto no valido";
 }
 
 string Airport::getstar(string point) {
     map<string,string>::iterator it;
     it = STARs[ldID].find(point);
-    return (*it).second;
+    if (it != STARs[ldID].end()){
+        return (*it).second;
+    }
+    return "Punto no valido";
 }
 
 bool Airport::loaded() const{
@@ -125,25 +153,44 @@ bool Airport::update_fl(string& calls, string field, string& info) {
     map<string,vuelo>::iterator it;
     it = mfl.find(calls);
     if (it == mfl.end()) return false;
-    mfl[calls].update(field,info);
+    if (field == "point") {
+        mfl[calls].update(field,info);
+        setdeparr(calls);
+    }
+    else mfl[calls].update(field,info);
     return true;
 }
 
 void Airport::write_flight(string &calls)  {
     map<string,vuelo>::const_iterator it;
     it = mfl.find(calls);
-    if (it == mfl.end()) cout << "El vuelo " << calls << " no existe." << endl;
+    if (it == mfl.end()) {
+        cout << "El vuelo " << calls << " no existe." << endl;
+        return;
+    }
     mfl[calls].write();
 }
 
-void Airport::fl_readback(string calls) const {
+void Airport::setdeparr(string& call) {
+    map<string,vuelo>::iterator it;
+    it = mfl.find(call);
+    if (it == mfl.end()) return;
+    pair<int,string> info;
+    info = mfl[call].getpoint();
+    if (info.first == 0){ //Departure
+        mfl[call].viaset(SIDs[toID][info.second]);
+    }
+    else mfl[call].viaset(STARs[ldID][info.second]);
+}
+
+void Airport::fl_readback(string calls) {
     map<string,vuelo>::const_iterator it;
     it = mfl.find(calls);
     if (it == mfl.end()){
         cout << "El vuelo " << calls << " no existe." << endl;
         return;
     }
-    mfl[calls].readback(calls);
+    mfl[calls].readback(qnh);
 }
 
 bool Airport::del_fl(string cals) {
@@ -154,4 +201,8 @@ bool Airport::del_fl(string cals) {
         return true;
     }
     return false;
+}
+
+void Airport::set_qnh(int& val) {
+    qnh = val;
 }

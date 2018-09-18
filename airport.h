@@ -18,12 +18,15 @@ private:
     vector<map<string,string>> SIDs;
     vector<map<string,string>> STARs;
     bool correct;
+    int nrwy, qnh;
     /**@brief Map containing flights.
      *
      */
     map<string,vuelo> mfl;
     string torwy, ldrwy;
     int toID, ldID;
+
+    //bool point_wr(string mode, int& nrwy);
 public:
     Airport();
 
@@ -36,7 +39,7 @@ public:
  * @param to Take off runway
  * @param ld Landing runway
  */
-    void setconfig(string& to, string& ld);
+    void setconfig(string to, string ld);
 
     /**@brief Check the SID of one point
      *
@@ -68,13 +71,15 @@ public:
 
     bool update_fl(string& calls, string field, string& info);
 
-    void write_flight(string& calls) ;
-    
-     /**@brief Auxiliar function to write a flight's readback
+    void write_flight(string& calls);
+
+    void setdeparr(string& call);
+
+    /**@brief Auxiliar function to write a flight's readback
      *
      * @param callsign Callsign of the desired flight's readback
      */
-    void fl_readback(string calls) const;
+    void fl_readback(string calls);
 
     /**@brief Deletes a flight
      *
@@ -83,6 +88,7 @@ public:
      */
     bool del_fl(string cals);
 
+    void set_qnh(int& val);
 };
 
 

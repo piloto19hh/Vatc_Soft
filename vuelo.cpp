@@ -12,7 +12,6 @@ vuelo::vuelo(){
     pnt = "NULL";
     inalt = "NULL";
     rwy = "NULL";
-    qnh = "NULL";
     sqwk = "NULL";
     status = 0;
 }
@@ -25,7 +24,6 @@ vuelo::vuelo(string call){
     pnt = "NULL";
     inalt = "NULL";
     rwy = "NULL";
-    qnh = "NULL";
     sqwk = "NULL";
 }
 /*
@@ -61,13 +59,23 @@ string vuelo::checkCS()const {
     return callsign;
 }
 
-void vuelo::setpoint(const string &point) {
-    pnt = point;
-    //establish via to correct departure. ej: EPAMA, RWY 24R -- EPAMA1A
-    if (rwy == "NULL") cout << "Pista no especificada." << endl;
-    else if (inout == 0){ //departure
-
+pair<int,string> vuelo::getpoint() {
+    //Returns status and point
+    pair<int,string> p1;
+    if (rwy == "NULL") {
+        cout << "Pista no especificada." << endl;
+        p1.first = 0;
+        p1.second = "0";
     }
+    else {
+        p1.first = inout;
+        p1.second = pnt;
+    }
+    return p1;
+}
+
+void vuelo::viaset(string& name) {
+    via = name;
 }
 
 void vuelo::update(string field, string info) {
@@ -76,7 +84,6 @@ void vuelo::update(string field, string info) {
     else if (field == "point") pnt = info;
     else if (field == "altitude") inalt = info;
     else if (field == "rwy") rwy = info;
-    else if (field == "qnh") qnh = info;
     else if (field == "sqwk") sqwk = info;
     else if (field == "mode"){
         if (info == "arrival") inout = 1;
@@ -112,7 +119,7 @@ void vuelo::write() const {
     cout << via << endl << "SQUAWK:   " << sqwk << endl;
 }
 
-void vuelo::readback() const {
-cout << callsign << "cleared to " << dest << " via " << via << ". Active runway is " << rwy << ", initial level " << inalt;
+void vuelo::readback(int& qnh) const {
+cout << callsign << " cleared to " << dest << " via " << via << ". Active runway is " << rwy << ", initial level " << inalt;
 cout << ". Sqwawk " << sqwk << " Actual QNH is " << qnh << endl;
 }

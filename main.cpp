@@ -22,7 +22,7 @@ int main() {
             cin >> state >> callsgn;
             if (not apt.new_flight(callsgn,state)) cout << "El vuelo ya existe" << endl; //1 arrival 0 dep
             if (state == "departure"){
-                cout << "¿Añadir destino? (S/N)" << endl;
+                cout << "¿Establecer destino? (S/N)" << endl;
                 string t;
                 cin >> t;
                 if (t == "S"){
@@ -35,7 +35,12 @@ int main() {
         }
         else if (ins == "upd"){
             string param, value;
-            cin >> callsgn >> param >> value;
+            //cout << "enter callsign: ";
+            cin >> callsgn;
+           //cout << endl << "parametro: ";
+            cin >>param;
+            //cout << endl << "nuevo valor: ";
+            cin >> value;
             apt.update_fl(callsgn,param,value);
         }
         else if (ins == "readback"){
@@ -60,5 +65,25 @@ int main() {
             cin >> callsgn;
             apt.write_flight(callsgn);
         }
+        else if (ins == "runway"){
+            cout << "IN" << endl;
+            string field, value;
+            cout << "departure/arrival?" << endl;
+            cin >> field >> value;
+            if (field == "departure"){
+                apt.setconfig(value, "NULL");
+            }
+            else if (field == "arrival"){
+                apt.setconfig("NULL",value);
+            }
+            else cout << "Error" << endl;
+        }
+        else if (ins == "set"){
+            string field, values;
+            int valuen;
+            cin >> field;
+            if (field == "qnh") apt.set_qnh(valuen);
+        }
+        else if 
     }
 }
