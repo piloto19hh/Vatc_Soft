@@ -25,6 +25,6 @@ Current features (doesn't necessarily mean they are all working):
 
 In progress/planned:
 
--Change active runways
+-Change active runways (Will not change flights with a point already assigned. <-Future feataure?)
 
 -List all departing or arriving flights
