@@ -10,7 +10,7 @@ using namespace std;
 
 class vuelo {
 private:
-    string callsign, ori, dest, via, pnt, inalt, rwy, qnh, sqwk;
+    string callsign, ori, dest, via, pnt, inalt, rwy, sqwk;
     int status; //0 on blocks, 1 taxiing, 2 t/o, 3 dep, 4 cruise, 5 desc, 6 app, 7 land
     int inout; //1 arrival 0 departure
 
@@ -36,11 +36,15 @@ public:
      *
      * @param point initial point of the route (if departure) or last route point (if arrival)
      */
-    void setpoint(const string& point);
+    pair<int,string> getpoint();
 
     void update(string field, string info);
 
     void write() const;
+
+    void viaset(string& name);
+
+    void readback(int& qnh) const;
 };
 
 

@@ -18,3 +18,13 @@ Current features (doesn't necessarily mean they are all working):
 -Check SIDs and STARs of any specific point
 
 -Automatically set the corresponding SID/STAR to a flight, once the point is known.
+
+-Generate flight readback/copy information.
+
+--------------------
+
+In progress/planned:
+
+-Change active runways (Will not change flights with a point already assigned. <-Future feataure?)
+
+-List all departing or arriving flights
