@@ -116,7 +116,7 @@ void vuelo::write() const {
     cout << "ORIGEN:   " << ori << endl << "DESTINO:  " << dest << endl;
     if (inout == 1) cout << "LLEGADA:  ";
     else cout << "SALIDA:   ";
-    cout << via << endl << "SQUAWK:   " << sqwk << endl;
+    cout << via << endl << "SQUAWK:   " << sqwk << endl << endl;
 }
 
 void vuelo::readback(int& qnh) const {

@@ -16,7 +16,7 @@ int main() {
     cout << endl;
     apt.setconfig(to,ld);
     string ins, callsgn, state;
-    while (cin >> ins and ins != "end"){
+    while (cin >> ins and ins != "end" and ins != "stop"){
 
         if (ins == "new"){ //Add new flight
             cin >> state >> callsgn;
@@ -84,6 +84,12 @@ int main() {
             cin >> field;
             if (field == "qnh") apt.set_qnh(valuen);
         }
-        else if 
+        else if (ins == "departures"){ //List departing aircraft
+            apt.listf("departures");
+        }
+        else if (ins == "arrivals"){ //List arriving aircraft
+            apt.listf("arrivals");
+        }
     }
+    cout << "Gracias por utilizar el asistente." << endl;
 }
