@@ -9,6 +9,7 @@
 #include <map>
 #include <fstream>
 #include "vuelo.h"
+#include <set>
 using namespace std;
 
 class Airport {
@@ -22,7 +23,9 @@ private:
     /**@brief Map containing flights.
      *
      */
-    map<string,vuelo> mfl;
+    map<string,vuelo> mfl; //Key: Callsign
+    set<string> departures;
+    set<string> arrivals;
     string torwy, ldrwy;
     int toID, ldID;
 
@@ -89,6 +92,8 @@ public:
     bool del_fl(string cals);
 
     void set_qnh(int& val);
+
+    void listf(string info);
 };
 
 

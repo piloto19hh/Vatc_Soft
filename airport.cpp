@@ -10,7 +10,11 @@ Airport::Airport(string& apt) {
     ifstream datasid;
     ifstream datastar;
     ICAO = apt;
-    if (ICAO == "LEPA"){ //fill map with points and their departure
+
+    datasid.open("./docs/" + apt + "SID.txt");
+    datastar.open("./docs/" + apt + "STAR.txt");
+
+    /*if (ICAO == "LEPA"){ //fill map with points and their departure
         datasid.open("./docs/LEPASID.txt");
         datastar.open("./docs/LEPASTAR.txt");
     }
@@ -22,8 +26,9 @@ Airport::Airport(string& apt) {
         cout << "El aeropuerto no se encuentra en la base de datos." << endl;
         correct = false;
     }
+     */
 
-    if (datasid.fail() or datastar.fail()) cout << "Se ha producido un error al leer los datos del aeropuerto" << endl;
+    if (datasid.fail() or datastar.fail()) cout << "Se ha producido un error al leer los datos del aeropuerto." << endl << "Comprueba que el documento se encuentre en el la carpeta 'docs'" << endl;
     else if (datasid.is_open() and datastar.is_open()) {
         unsigned int n;
         datasid >> n; //Number of Rumways
@@ -138,12 +143,14 @@ bool Airport::new_flight(const string &calls, string& stat) {
         f1.update("mode","arrival");
         f1.update("destination",ICAO);
         f1.update("rwy",ldrwy);
+        arrivals.insert(calls);
     }
     else {
         f1.update("status","blocks");
         f1.update("mode","departure");
         f1.update("origin",ICAO);
         f1.update("rwy",torwy);
+        departures.insert(calls);
     }
     mfl[calls] = f1;
     return true;
@@ -156,6 +163,22 @@ bool Airport::update_fl(string& calls, string field, string& info) {
     if (field == "point") {
         mfl[calls].update(field,info);
         setdeparr(calls);
+    }
+    else if (field == "mode"){
+        set<string>::iterator itset;
+        if (info == "arrival"){
+            itset = departures.find(calls);
+            if (itset == departures.end()) return false;
+            departures.erase(itset);
+            arrivals.insert(calls);
+        }
+        else{
+            itset = arrivals.find(calls);
+            if (itset == arrivals.end()) return false;
+            arrivals.erase(itset);
+            departures.insert(calls);
+        }
+        mfl[calls].update(field,info);
     }
     else mfl[calls].update(field,info);
     return true;
@@ -195,9 +218,13 @@ void Airport::fl_readback(string calls) {
 
 bool Airport::del_fl(string cals) {
     map<string,vuelo>::iterator it;
+    set<string>::iterator itset;
     it = mfl.find(cals);
     if (it != mfl.end()) {
         mfl.erase(it);
+        itset = departures.find(cals);
+        if (itset != departures.end()) departures.erase(itset);
+        else arrivals.erase(cals);
         return true;
     }
     return false;
@@ -205,4 +232,14 @@ bool Airport::del_fl(string cals) {
 
 void Airport::set_qnh(int& val) {
     qnh = val;
+}
+
+void Airport::listf(string info) {
+    set<string>::const_iterator it;
+    if (info == "departures"){
+        for(it = departures.begin(); it != departures.end(); ++it) cout << *it << endl;
+    }
+    else{
+        for (it = arrivals.begin(); it != arrivals.end(); ++it) cout << *it << endl;
+    }
 }
