@@ -7,7 +7,7 @@ Made by piloto19hh
 
 
 
-Current features (doesn't necessarily mean they are all working):
+Current features:
 
 -Add/delete flights
 
@@ -21,10 +21,8 @@ Current features (doesn't necessarily mean they are all working):
 
 -Generate flight readback/copy information.
 
---------------------
-
-In progress/planned:
-
--Change active runways (Will not change flights with a point already assigned. <-Future feataure?)
+-Change active runways (Will not change flights with a point already assigned.)
 
 -List all departing or arriving flights
+
+--------------------
