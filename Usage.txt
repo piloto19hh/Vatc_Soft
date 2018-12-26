@@ -1,0 +1,40 @@
+Utilice los siguientes comandos seguidos del parametro deseado (entre parentesis). Escriba solo el comando si no hay parametros
+Use the following commands followed by the desired param (in brackets). Write only the command if there are no params.
+
+new (departure/arrival,callsign) --> Crea un nuevo vuelo
+upd (Callsign,Param,value) --> Actualiza la informacion de un vuelo. Params: point, mode, origin, destination, altitude, rwy, sqwk, status*
+readback (callsign) --> Muestra la copia/readback para el vuelo
+sid (point) --> Muestra la SID de un punto
+star (point) --> Muestra la STAR de un punto
+del (callsign) --> Borra un vuelo
+flight (callsign) --> Muestra la informacion de un vuelo
+runway --> Establece una nueva pista en uso (NO afecta a los vuelos ya creados)
+set (qnh) --> Establece el nuevo QNH en uso
+departures --> Muestra una lista de los vuelos salientes
+arrivals --> Muestra una lista de los vuelos que llegan
+end/stop --> Salir del asistente
+
+-----
+
+new (departure/arrival,callsign) --> Creates new flight
+upd (Callsign,Param,value) --> Updates flight information. Params: point, mode, origin, destination, altitude, rwy, sqwk, status*
+readback (callsign) --> Shows the readback for the flight
+sid (point) --> Shows the SID for a certain point
+star (point) --> Shows the STAR for a certain point
+del (callsign) --> Deletes a flight
+flight (callsign) --> Shows a flight's information
+runway (callsign) --> Changes the active runway (DOES NOT affect previously created flights)
+set (qnh) --> Sets a new QNH
+departures --> Shows a list of all departing flights
+arrivals --> Shows a list of all arriving flights
+end/stop --> Exit the assistant
+
+*Value:
+0: On blocks
+1: Taxiing
+2: Taking Off
+3: Climbing
+4: Cruise
+5: Descending
+6: Approaching
+7: Landing
