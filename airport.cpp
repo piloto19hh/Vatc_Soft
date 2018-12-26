@@ -1,7 +1,3 @@
-//
-// Created by raul_ on 05/06/2018.
-//
-
 #include "airport.h"
 
 Airport::Airport() = default;
@@ -13,20 +9,6 @@ Airport::Airport(string& apt) {
 
     datasid.open("./docs/" + apt + "SID.txt");
     datastar.open("./docs/" + apt + "STAR.txt");
-
-    /*if (ICAO == "LEPA"){ //fill map with points and their departure
-        datasid.open("./docs/LEPASID.txt");
-        datastar.open("./docs/LEPASTAR.txt");
-    }
-    else if (ICAO == "LEAL"){ //fill map with points and their departure
-        datasid.open("./docs/LEALSID.txt");
-        datastar.open("LEALSTAR.txt");
-    }
-    else {
-        cout << "El aeropuerto no se encuentra en la base de datos." << endl;
-        correct = false;
-    }
-     */
 
     if (datasid.fail() or datastar.fail()) cout << "Se ha producido un error al leer los datos del aeropuerto." << endl << "Comprueba que el documento se encuentre en el la carpeta 'docs'" << endl;
     else if (datasid.is_open() and datastar.is_open()) {
@@ -69,7 +51,7 @@ Airport::Airport(string& apt) {
 }
 
 /*
-bool Airport::point_wr(string mode, int& nrwy){
+bool Airport::point_wr(string mode, int& nrwy){ // Debug Code
     if (mode == "dep"){
         cout << "Pista " << torwy << ":" << endl;
         for (auto it = SIDs[toID].begin(); it != SIDs[toID].end(); ++it) {
@@ -104,7 +86,7 @@ void Airport::setconfig(string to, string ld) {
         if (pistas[i] == ldrwy) ldID = i;
     }
     ldID -= nrwy;
-    /*
+    /* Debug Code
     int nrwy = 13;
     int nrwy1 = 12;
     bool donedep = point_wr("dep",nrwy);
