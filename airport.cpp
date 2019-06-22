@@ -1,7 +1,3 @@
-//
-// Created by raul_ on 05/06/2018.
-//
-
 #include "airport.h"
 
 Airport::Airport() = default;
@@ -13,20 +9,6 @@ Airport::Airport(string& apt) {
 
     datasid.open("./docs/" + apt + "SID.txt");
     datastar.open("./docs/" + apt + "STAR.txt");
-
-    /*if (ICAO == "LEPA"){ //fill map with points and their departure
-        datasid.open("./docs/LEPASID.txt");
-        datastar.open("./docs/LEPASTAR.txt");
-    }
-    else if (ICAO == "LEAL"){ //fill map with points and their departure
-        datasid.open("./docs/LEALSID.txt");
-        datastar.open("LEALSTAR.txt");
-    }
-    else {
-        cout << "El aeropuerto no se encuentra en la base de datos." << endl;
-        correct = false;
-    }
-     */
 
     if (datasid.fail() or datastar.fail()) cout << "Se ha producido un error al leer los datos del aeropuerto." << endl << "Comprueba que el documento se encuentre en el la carpeta 'docs'" << endl;
     else if (datasid.is_open() and datastar.is_open()) {
@@ -69,7 +51,7 @@ Airport::Airport(string& apt) {
 }
 
 /*
-bool Airport::point_wr(string mode, int& nrwy){
+bool Airport::point_wr(string mode, int& nrwy){ // Debug Code
     if (mode == "dep"){
         cout << "Pista " << torwy << ":" << endl;
         for (auto it = SIDs[toID].begin(); it != SIDs[toID].end(); ++it) {
@@ -104,7 +86,7 @@ void Airport::setconfig(string to, string ld) {
         if (pistas[i] == ldrwy) ldID = i;
     }
     ldID -= nrwy;
-    /*
+    /* Debug Code
     int nrwy = 13;
     int nrwy1 = 12;
     bool donedep = point_wr("dep",nrwy);
@@ -161,8 +143,11 @@ bool Airport::update_fl(string& calls, string field, string& info) {
     it = mfl.find(calls);
     if (it == mfl.end()) return false;
     if (field == "point") {
-        mfl[calls].update(field,info);
-        setdeparr(calls);
+        if(SIDs[toID].find(info) != SIDs[toID].end()){
+            mfl[calls].update(field,info);
+            setdeparr(calls);
+        }
+        else cout << "El punto especificado no existe." << endl << endl;
     }
     else if (field == "mode"){
         set<string>::iterator itset;
@@ -188,7 +173,7 @@ void Airport::write_flight(string &calls)  {
     map<string,vuelo>::const_iterator it;
     it = mfl.find(calls);
     if (it == mfl.end()) {
-        cout << "El vuelo " << calls << " no existe." << endl;
+        cout << "El vuelo " << calls << " no existe." << endl << endl;
         return;
     }
     mfl[calls].write();
@@ -198,10 +183,11 @@ void Airport::setdeparr(string& call) {
     map<string,vuelo>::iterator it;
     it = mfl.find(call);
     if (it == mfl.end()) return;
-    pair<int,string> info;
+    pair<int,string> info; //contains arrival or departure in first and the initial VOR in the second member.
     info = mfl[call].getpoint();
     if (info.first == 0){ //Departure
         mfl[call].viaset(SIDs[toID][info.second]);
+
     }
     else mfl[call].viaset(STARs[ldID][info.second]);
 }
@@ -242,4 +228,19 @@ void Airport::listf(string info) {
     else{
         for (it = arrivals.begin(); it != arrivals.end(); ++it) cout << *it << endl;
     }
+    cout << endl;
+}
+
+void Airport::lfl(){
+    cout << endl << "CALLSIGN   |   ARR/DEP   |   DEST   |    STATUS   |   " << endl;
+    map<string,vuelo>::const_iterator it;
+    for(it = mfl.begin(); it != mfl.end();++it){
+        string cs = (*it).first;
+        cout << cs << "     |     ";
+        if (mfl[cs].fldest() == ICAO) cout << "ARR" << "     |    --    |";
+        else cout << "DEP     |   " << mfl[cs].fldest() << "   |";
+        cout << "   " << mfl[cs].state() << endl;
+        //TODO: make enum with status and make it appear here, together with all of the other listing functions.
+    }
+    cout << endl;
 }

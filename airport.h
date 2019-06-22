@@ -94,6 +94,11 @@ public:
     void set_qnh(int& val);
 
     void listf(string info);
+
+    /**@brief Lists all flights currently in the system, with a brief information of each
+     * 
+     */
+    void lfl();
 };
 
 
