@@ -14,6 +14,17 @@ private:
     int status; //0 on blocks, 1 taxiing, 2 t/o, 3 dep, 4 cruise, 5 desc, 6 app, 7 land
     int inout; //1 arrival 0 departure
 
+    enum fl_status{
+        blocks,
+        taxi,
+        takeoff,
+        climbing,
+        cruise,
+        descend,
+        app,
+        landing
+    };
+
 public:
 
     vuelo();
@@ -31,6 +42,15 @@ public:
      * @return The callsign of the flight
      */
     string checkCS() const;
+
+
+    /**@brief checks a flight's destination
+     * 
+     * @return The destination of the flight
+     */
+    string fldest() const;
+
+    string state() const;
 
     /**@brief Sets the initial point to the flight and its corresponding arrival or departure.
      *

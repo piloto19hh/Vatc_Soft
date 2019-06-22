@@ -143,8 +143,11 @@ bool Airport::update_fl(string& calls, string field, string& info) {
     it = mfl.find(calls);
     if (it == mfl.end()) return false;
     if (field == "point") {
-        mfl[calls].update(field,info);
-        setdeparr(calls);
+        if(SIDs[toID].find(info) != SIDs[toID].end()){
+            mfl[calls].update(field,info);
+            setdeparr(calls);
+        }
+        else cout << "El punto especificado no existe." << endl << endl;
     }
     else if (field == "mode"){
         set<string>::iterator itset;
@@ -170,7 +173,7 @@ void Airport::write_flight(string &calls)  {
     map<string,vuelo>::const_iterator it;
     it = mfl.find(calls);
     if (it == mfl.end()) {
-        cout << "El vuelo " << calls << " no existe." << endl;
+        cout << "El vuelo " << calls << " no existe." << endl << endl;
         return;
     }
     mfl[calls].write();
@@ -180,10 +183,11 @@ void Airport::setdeparr(string& call) {
     map<string,vuelo>::iterator it;
     it = mfl.find(call);
     if (it == mfl.end()) return;
-    pair<int,string> info;
+    pair<int,string> info; //contains arrival or departure in first and the initial VOR in the second member.
     info = mfl[call].getpoint();
     if (info.first == 0){ //Departure
         mfl[call].viaset(SIDs[toID][info.second]);
+
     }
     else mfl[call].viaset(STARs[ldID][info.second]);
 }
@@ -224,4 +228,19 @@ void Airport::listf(string info) {
     else{
         for (it = arrivals.begin(); it != arrivals.end(); ++it) cout << *it << endl;
     }
+    cout << endl;
+}
+
+void Airport::lfl(){
+    cout << endl << "CALLSIGN   |   ARR/DEP   |   DEST   |    STATUS   |   " << endl;
+    map<string,vuelo>::const_iterator it;
+    for(it = mfl.begin(); it != mfl.end();++it){
+        string cs = (*it).first;
+        cout << cs << "     |     ";
+        if (mfl[cs].fldest() == ICAO) cout << "ARR" << "     |    --    |";
+        else cout << "DEP     |   " << mfl[cs].fldest() << "   |";
+        cout << "   " << mfl[cs].state() << endl;
+        //TODO: make enum with status and make it appear here, together with all of the other listing functions.
+    }
+    cout << endl;
 }

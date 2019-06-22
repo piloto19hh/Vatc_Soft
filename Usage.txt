@@ -7,34 +7,36 @@ readback (callsign) --> Muestra la copia/readback para el vuelo
 sid (point) --> Muestra la SID de un punto
 star (point) --> Muestra la STAR de un punto
 del (callsign) --> Borra un vuelo
-flight (callsign) --> Muestra la informacion de un vuelo
+flight (callsign) OR fl (callsign) --> Muestra la informacion de un vuelo
 runway --> Establece una nueva pista en uso (NO afecta a los vuelos ya creados)
-set (qnh) --> Establece el nuevo QNH en uso
+set qnh (qnh) --> Establece el nuevo QNH en uso
 departures --> Muestra una lista de los vuelos salientes
 arrivals --> Muestra una lista de los vuelos que llegan
+lfl --> Muestra una breve resumen de los vuelos en el sistema.
 end/stop --> Salir del asistente
 
 -----
 
 new (departure/arrival,callsign) --> Creates new flight
-upd (Callsign,Param,value) --> Updates flight information. Params: point, mode, origin, destination, altitude, rwy, sqwk, status*
+upd (Callsign,Param,value) --> Updates flight information. Params: point, mode, origin, destination, init altitude, rwy, sqwk, status*
 readback (callsign) --> Shows the readback for the flight
 sid (point) --> Shows the SID for a certain point
 star (point) --> Shows the STAR for a certain point
 del (callsign) --> Deletes a flight
-flight (callsign) --> Shows a flight's information
+flight (callsign) OR fl (callsign) --> Shows a flight's information
 runway (callsign) --> Changes the active runway (DOES NOT affect previously created flights)
-set (qnh) --> Sets a new QNH
+set qnh (qnh) --> Sets a new QNH
 departures --> Shows a list of all departing flights
 arrivals --> Shows a list of all arriving flights
+lfl --> Shows a brief summary of the flights in the system
 end/stop --> Exit the assistant
 
 *Value:
-0: On blocks
-1: Taxiing
-2: Taking Off
-3: Climbing
-4: Cruise
-5: Descending
-6: Approaching
-7: Landing
+0 - blocks:	On blocks
+1 - taxi:	Taxiing
+2 - takeoff:	Taking Off
+3 - climbing:	Climbing
+4 - cruise:	Cruise
+5 - descend:	Descending
+6 - app:	Approaching
+7 - landing:	Landing

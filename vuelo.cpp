@@ -59,11 +59,27 @@ string vuelo::checkCS()const {
     return callsign;
 }
 
+string vuelo::fldest() const{
+    return dest;
+}
+
+string vuelo::state() const{
+    if (status == blocks) return "On Blocks |";
+    else if (status == taxi) return "Taxiing   |";
+    else if (status == takeoff) return "Take Off  |";
+    else if (status == climbing) return "Climbing  |";
+    else if (status == cruise) return "Cruise    |";
+    else if (status == descend) return "Descending|";
+    else if (status == app) return "Approach  |";
+    else if (status == landing) return "Landing   |";
+    else return "Error";
+}
+
 pair<int,string> vuelo::getpoint() {
     //Returns status and point
     pair<int,string> p1;
     if (rwy == "NULL") {
-        cout << "Pista no especificada." << endl;
+        cout << "Pista no especificada." << endl << endl;
         p1.first = 0;
         p1.second = "0";
     }
@@ -90,28 +106,28 @@ void vuelo::update(string field, string info) {
         else inout = 0;
     }
     else if (field == "status"){
-        if (info == "blocks") status = 0;
-        else if (info == "taxi") status = 1;
-        else if (info == "take off") status = 2;
-        else if (info == "climbing") status = 3;
-        else if (info == "cruise") status = 4;
-        else if (info == "descend") status = 5;
-        else if (info == "app") status = 6;
-        else if (info == "landing") status = 7;
+        if (info == "blocks") status = blocks;
+        else if (info == "taxi") status = taxi;
+        else if (info == "take off") status = takeoff;
+        else if (info == "climbing") status = climbing;
+        else if (info == "cruise") status = cruise;
+        else if (info == "descend") status = descend;
+        else if (info == "app") status = app;
+        else if (info == "landing") status = landing;
     }
-    else cout << "'" << field << "' no es un parametro válido" << endl;
+    else cout << "'" << field << "' no es un parametro válido" << endl << endl;
 }
 
 void vuelo::write() const {
     cout << endl << "CALLSIGN: "<< callsign << endl << "ESTADO:   ";
     if (status == 0) cout << "On Blocks" << endl;
-    else if (status == 1) cout << "Taxiing" << endl;
-    else if (status == 2) cout << "Taking Off" << endl;
-    else if (status == 3) cout << "Climbing" << endl;
-    else if (status == 4) cout << "Cruise" << endl;
-    else if (status == 5) cout << "Descending"<< endl;
-    else if (status == 6) cout << "Approach" << endl;
-    else if (status == 7) cout << "Landing" << endl;
+    else if (status == taxi) cout << "Taxiing" << endl;
+    else if (status == takeoff) cout << "Taking Off" << endl;
+    else if (status == climbing) cout << "Climbing" << endl;
+    else if (status == cruise) cout << "Cruise" << endl;
+    else if (status == descend) cout << "Descending"<< endl;
+    else if (status == app) cout << "Approach" << endl;
+    else if (status == landing) cout << "Landing" << endl;
     else cout << "NULL" << endl;
     cout << "ORIGEN:   " << ori << endl << "DESTINO:  " << dest << endl;
     if (inout == 1) cout << "LLEGADA:  ";
@@ -121,5 +137,5 @@ void vuelo::write() const {
 
 void vuelo::readback(int& qnh) const {
 cout << callsign << " cleared to " << dest << " via " << via << ". Active runway is " << rwy << ", initial level " << inalt;
-cout << ". Sqwawk " << sqwk << " Actual QNH is " << qnh << endl;
+cout << ". Sqwawk " << sqwk << " Actual QNH is " << qnh << endl << endl;
 }

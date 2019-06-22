@@ -15,9 +15,13 @@ int main() {
     cin >> ld;
     cout << endl;
     apt.setconfig(to,ld);
+    int qnh = 1013;
+    apt.set_qnh(qnh);
+    for (int i = 0; i < 10; ++i) cout << endl;
     string ins, callsgn, state;
-    while (cin >> ins and ins != "end" and ins != "stop"){
 
+    while (cin >> ins and ins != "end" and ins != "stop"){
+        
         if (ins == "new"){ //Add new flight
             cin >> state >> callsgn;
             if (not apt.new_flight(callsgn,state)) cout << "El vuelo ya existe" << endl; //1 arrival 0 dep
@@ -28,10 +32,10 @@ int main() {
                 if (t == "S"){
                     cout << "Destino: ";
                     cin >> t;
-                    cout << endl;
                     apt.update_fl(callsgn,"destination",t);
                 }
             }
+            cout << endl;
         }
         else if (ins == "upd"){
             string param, value;
@@ -50,23 +54,22 @@ int main() {
         else if (ins == "sid"){
             string point;
             cin >> point;
-            cout << apt.getsid(point) << endl;
+            cout << apt.getsid(point) << endl << endl;
         }
         else if (ins == "star"){
             string point;
             cin >> point;
-            cout << apt.getstar(point) << endl;
+            cout << apt.getstar(point) << endl << endl;
         }
         else if (ins == "del"){
             cin >> callsgn;
-            if(not apt.del_fl(callsgn)) cout << "El vuelo no existe" << endl;
+            if(not apt.del_fl(callsgn)) cout << "El vuelo no existe" << endl << endl;
         }
-        else if (ins == "flight"){
+        else if (ins == "flight" or ins == "fl"){
             cin >> callsgn;
             apt.write_flight(callsgn);
         }
         else if (ins == "runway"){
-            cout << "IN" << endl;
             string field, value;
             cout << "departure/arrival?" << endl;
             cin >> field >> value;
@@ -79,16 +82,20 @@ int main() {
             else cout << "Error" << endl;
         }
         else if (ins == "set"){
-            string field, values;
+            string field;
             int valuen;
-            cin >> field;
+            cin >> field >> valuen;
             if (field == "qnh") apt.set_qnh(valuen);
+            cout << endl;
         }
         else if (ins == "departures"){ //List departing aircraft
             apt.listf("departures");
         }
         else if (ins == "arrivals"){ //List arriving aircraft
             apt.listf("arrivals");
+        }
+        else if (ins == "lfl"){
+            apt.lfl();
         }
     }
     cout << "Gracias por utilizar el asistente." << endl;
