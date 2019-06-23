@@ -24,6 +24,8 @@ Current features:
 
 -List all departing or arriving flights
 
+-List all flights
+
 --------------------
 
 Planned/WIP features:
