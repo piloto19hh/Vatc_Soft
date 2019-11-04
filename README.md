@@ -3,8 +3,7 @@ Virtual ATC helper software
 
 Program made to assist Virtual ATCs in platforms such as IVAO in their jobs.
 
-Made by piloto19hh 
-
+Made by piloto19hh to practice c++ programming
 
 
 Current features:
@@ -25,4 +24,14 @@ Current features:
 
 -List all departing or arriving flights
 
+-List all flights
+
 --------------------
+
+Planned/WIP features:
+
+- Ability to know an airport's name from the ICAO code.
+
+- Automatically replace ICAO code with the airport name in the readback.
+
+Read "usage.txt" for a list of commands.
