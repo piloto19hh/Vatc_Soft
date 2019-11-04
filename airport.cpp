@@ -32,11 +32,12 @@ Airport::Airport(string& apt) {
                 SIDs[pst][pont] = route;
             }
         }
+        datastar >> n; //Number of arrival runways
         for (int i = n; i < 2*n; ++i){
             datastar >> pista;
             pistas[i] = pista;
         }
-        datastar >> nrwy;
+        datastar >> nrwy; //Number of possible arrivals on each runway
         for (int pst = 0; pst < n; ++pst) { //Filling vectors with arrivals
             for (int i = 0; i < nrwy; ++i) {
                 string pont, route;
