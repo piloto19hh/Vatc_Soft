@@ -99,14 +99,15 @@ void vuelo::update(string field, string info) {
     else if (field == "destination") dest = info;
     else if (field == "point") pnt = info;
     else if (field == "altitude") inalt = info;
-    else if (field == "rwy") rwy = info;
-    else if (field == "sqwk") sqwk = info;
+    else if (field == "rwy" or field == "r" or field == "runway") rwy = info;
+    else if (field == "sqwk" or field == "sk" or field == "sq" or field == "s") sqwk = info;
     else if (field == "mode"){
         if (info == "arrival") inout = 1;
         else inout = 0;
     }
     else if (field == "status"){
-        if (info == "blocks") status = blocks;
+        if (info == "++") ++status;
+        else if (info == "blocks") status = blocks;
         else if (info == "taxi") status = taxi;
         else if (info == "take off") status = takeoff;
         else if (info == "climbing") status = climbing;

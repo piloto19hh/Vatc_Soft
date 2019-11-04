@@ -38,14 +38,18 @@ int main() {
             cout << endl;
         }
         else if (ins == "upd"){
-            string param, value;
-            //cout << "enter callsign: ";
             cin >> callsgn;
-           //cout << endl << "parametro: ";
-            cin >>param;
-            //cout << endl << "nuevo valor: ";
-            cin >> value;
-            apt.update_fl(callsgn,param,value);
+            if(callsgn == "h" or callsgn == "help") {
+                cout << "[CALLSIGN] [point, mode, origin, destination, altitude, runway/rwy/r, sqwk/sk/sq/s, status]" << endl;
+            }
+            else{
+                string param, value;
+                //cout << endl << "parametro: ";
+                cin >>param;
+                //cout << endl << "nuevo valor: ";
+                cin >> value;
+                apt.update_fl(callsgn,param,value);
+            }
         }
         else if (ins == "readback"){
             cin >> callsgn;
@@ -94,8 +98,26 @@ int main() {
         else if (ins == "arrivals"){ //List arriving aircraft
             apt.listf("arrivals");
         }
-        else if (ins == "lfl"){
+        else if (ins == "lfl" or ins == "all"){
             apt.lfl();
+        }
+        else if (ins == "help" or ins == "commands"){
+            cout << "new [departure/arrival] [CALLSIGN] --> Creates new flight" << endl;
+            cout << "upd [CALLSIGN/help] [PARAM] [VALUE] -- PARAMS on 'upd help' --> Updates the specified flight's PARAM with VALUE." << endl;
+            cout << "++/next/step [CALLSIGN]            --> Steps forward the flight's status (ex.On blocks -> Taxiing) More in Usage.txt" << endl;
+            cout << "readback [CALLSIGN]                --> Shows copy/readback for the flight" << endl;
+            cout << "sid [VOR]                          --> Shows the SID for the specified VOR" << endl;
+            cout << "star [VOR]                         --> Shows the STAR for the specified VOR" << endl;
+            cout << "del [CALLSIGN]                     --> Delete the specified flight" << endl;
+            cout << "flight/fl [CALLSIGN]               --> Shows the full information for the specified flight" << endl;
+            cout << "runway                             --> Used to change active runways. Does NOT affect already existing flights (must be changed individualy)" << endl;
+            cout << "set qnh [QNH]                      --> Changes the QNH of the airport" << endl;
+            cout << "departures/arrivals                --> Lists all existing departures/arrivals in alphabetical order" << endl;
+            cout << "lfl/all                            --> Lists all existing flights an a brief overview of each, sorted in cration order." << endl;
+        }
+        else if (ins == "++" or ins == "advace" or ins == "step" or ins == "next"){
+            cin >> callsgn;
+            apt.update_fl(callsgn,"status","++");
         }
     }
     cout << "Gracias por utilizar el asistente." << endl;

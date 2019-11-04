@@ -117,7 +117,7 @@ bool Airport::loaded() const{
 }
 
 bool Airport::new_flight(const string &calls, string& stat) {
-    map<string,vuelo>::iterator it;
+    unordered_map<string,vuelo>::iterator it;
     it = mfl.find(calls);
     if (it != mfl.end()) return false;
     vuelo f1(calls);
@@ -139,8 +139,8 @@ bool Airport::new_flight(const string &calls, string& stat) {
     return true;
 }
 
-bool Airport::update_fl(string& calls, string field, string& info) {
-    map<string,vuelo>::iterator it;
+bool Airport::update_fl(string& calls, string field, string info) {
+    unordered_map<string,vuelo>::iterator it;
     it = mfl.find(calls);
     if (it == mfl.end()) return false;
     if (field == "point") {
@@ -171,7 +171,7 @@ bool Airport::update_fl(string& calls, string field, string& info) {
 }
 
 void Airport::write_flight(string &calls)  {
-    map<string,vuelo>::const_iterator it;
+    unordered_map<string,vuelo>::const_iterator it;
     it = mfl.find(calls);
     if (it == mfl.end()) {
         cout << "El vuelo " << calls << " no existe." << endl << endl;
@@ -181,7 +181,7 @@ void Airport::write_flight(string &calls)  {
 }
 
 void Airport::setdeparr(string& call) {
-    map<string,vuelo>::iterator it;
+    unordered_map<string,vuelo>::iterator it;
     it = mfl.find(call);
     if (it == mfl.end()) return;
     pair<int,string> info; //contains arrival or departure in first and the initial VOR in the second member.
@@ -194,7 +194,7 @@ void Airport::setdeparr(string& call) {
 }
 
 void Airport::fl_readback(string calls) {
-    map<string,vuelo>::const_iterator it;
+    unordered_map<string,vuelo>::const_iterator it;
     it = mfl.find(calls);
     if (it == mfl.end()){
         cout << "El vuelo " << calls << " no existe." << endl;
@@ -204,7 +204,7 @@ void Airport::fl_readback(string calls) {
 }
 
 bool Airport::del_fl(string cals) {
-    map<string,vuelo>::iterator it;
+    unordered_map<string,vuelo>::iterator it;
     set<string>::iterator itset;
     it = mfl.find(cals);
     if (it != mfl.end()) {
@@ -234,7 +234,8 @@ void Airport::listf(string info) {
 
 void Airport::lfl(){
     cout << endl << "CALLSIGN   |   ARR/DEP   |   DEST   |    STATUS   |   " << endl;
-    map<string,vuelo>::const_iterator it;
+    cout << "------------------------------------------------------" << endl;
+    unordered_map<string,vuelo>::const_iterator it;
     for(it = mfl.begin(); it != mfl.end();++it){
         string cs = (*it).first;
         cout << cs << "     |     ";
