@@ -139,7 +139,7 @@ bool Airport::new_flight(const string &calls, string& stat) {
     return true;
 }
 
-bool Airport::update_fl(string& calls, string field, string& info) {
+bool Airport::update_fl(string& calls, string field, string info) {
     unordered_map<string,vuelo>::iterator it;
     it = mfl.find(calls);
     if (it == mfl.end()) return false;
