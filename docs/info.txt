@@ -3,4 +3,8 @@ In "docs" folder, there must be all the airports' information documents. For eac
 2- SARs document. It'll be named 'ICAOSTAR.txt', replacin ICAO with the airport's ICAO cose.
 
 Those documents will have all the necessary information about each airport. This is: number of runways, the runways' names and the
-number of possible arrival/departure routes , followed by it's point name and arr/dep name.
+number of possible arrival(STAR)/departure(SID) routes, followed by all the routes in the format: point name and arr/dep name.
+
+Important: If one runway has more routes than another, fill the one with less routes with "NULL NULL". 
+
+Check for an example in LEPASID and LEPASTAR for the airport LEPA (Palma de Mallorca).

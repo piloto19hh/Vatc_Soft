@@ -1,7 +1,3 @@
-//
-// Created by raul_ on 05/06/2018.
-//
-
 #ifndef VATC_SOFT_VUELO_H
 #define VATC_SOFT_VUELO_H
 

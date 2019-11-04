@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <fstream>
 #include "vuelo.h"
 #include <set>
@@ -23,7 +24,7 @@ private:
     /**@brief Map containing flights.
      *
      */
-    map<string,vuelo> mfl; //Key: Callsign
+    unordered_map<string,vuelo> mfl; //Key: Callsign
     set<string> departures;
     set<string> arrivals;
     string torwy, ldrwy;
